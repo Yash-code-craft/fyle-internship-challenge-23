@@ -8,9 +8,9 @@ I successfully completed the Fyle Frontend Challenge. Below is the link to my de
 
 ## Challenge Outline
 
-The challenge involves implementing an application using the GitHub API.
+The challenge involved implementing an application using the GitHub API.
 
-The required services are already implemented - refer to the `ApiService`.
+The required services were implemented including the Pagination
 
 
 If you have any questions or need assistance, please feel free to reach out.
