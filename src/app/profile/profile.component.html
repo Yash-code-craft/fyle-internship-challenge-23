@@ -6,7 +6,7 @@
       <img class="inline-block h-48 w-48 ml-16 mt-12 mb-8 rounded-full ring-2 ring-white"
           [src]="profileData?.avatar_url" alt="" />
       <!-- Profile Data -->
-      <div class="my-12 text-white">
+      <div class="my-12 text-black">
           <h1 class="text-4xl">{{ profileData?.name }}</h1>
           <div class="leading-6 flex flex-col">
               <h3 class="mt-2 w-2/3">
@@ -46,7 +46,7 @@
       <div class="hidden sm:flex sm:flex-1 items-center sm:justify-between">
           <!-- Page Details -->
           <div>
-              <p class="text-sm text-white flex gap-2 items-center relative">
+              <p class="text-sm  flex gap-2 items-center relative">
                   Rows per page:&nbsp;{{ pageSize }}
                   <span class="items-center flex">
                       <!-- Page Size DropDown -->
@@ -84,35 +84,84 @@
               </p>
           </div>
           <!-- Page Navigation Panel Display -->
-          <div>
-              <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
-                  <div (click)="previousPage()"
-                      class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-white hover:text-black focus:z-20 focus:outline-offset-0">
-                      <span class="sr-only">Previous</span>
-                      <!--Hidden from user, shown to screen readers-->
-                      <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                          <path fill-rule="evenodd"
-                              d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
-                              clip-rule="evenodd" />
-                      </svg>
+          <!-- Pagination Section -->
+<div class="flex items-center justify-between border-t border-gray-200 py-3 mx-16 relative">
+  <div class="hidden sm:flex sm:flex-1 items-center sm:justify-between">
+      <!-- Page Details -->
+      <div>
+          <p class="text-sm  flex gap-2 items-center relative">
+              Rows per page:&nbsp;{{ pageSize }}
+              <span class="items-center flex">
+                  <!-- Page Size DropDown -->
+                  <div class="items-center flex relative">
+                      <button
+                          class="text-white bg-purple-500 font-medium rounded-lg text-sm px-2 text-center inline-flex items-center"
+                          (mouseenter)="handleDropDown()">
+                          <svg class="w-4 h-4 text-white" aria-hidden="true" fill="none" stroke="currentColor"
+                              stroke-width="3" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                                  d="M19 9l-7 7-7-7"></path>
+                          </svg>
+                      </button>
+                      <div id="dropdown" (mouseleave)="handleDropDown()"
+                          [ngClass]="{
+                          'z-10': true,
+                          'w-44': true,
+                          'bg-white': true,
+                          rounded: true,
+                          'divide-y': true,
+                          'divide-gray-100': true,
+                          shadow: true,
+                          block: isOpen,
+                          hidden: !isOpen,
+                      }" class="top-4 absolute">
+                          <ul
+                              class="z-10 w-44 bg-white rounded divide-y text-black divide-gray-100 shadow">
+                              <li *ngFor="let i of pageOptions">
+                                  <div (click)="setPageSize(i)"
+                                      class="block py-2 px-4 hover:bg-gray-100">
+                                      {{ i }}
+                                  </div>
+                              </li>
+                          </ul>
+                      </div>
                   </div>
-                  <div *ngFor="let page of displayedPages" (click)="setPage(page)"
-                      [class]="currentPage === page ? 'bg-purple-600' : ''"
-                      class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-white ring-1 ring-inset ring-gray-300 hover:text-black hover:bg-white focus:z-20 focus:outline-offset-0">
-                      {{ page === -1 ? "..." : page }}
-                  </div>
+              </span>
+          </p>
+      </div>
+      <!-- Page Navigation Panel Display -->
+      <div>
+          <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+              <div (click)="previousPage()"
+                  class="relative inline-flex items-center rounded-l-md px-2 py-2 text-white bg-purple-500 hover:bg-gray-600 ring-1 ring-inset ring-gray-500 focus:z-20 focus:outline-offset-0">
+                  <span class="sr-only">Previous</span>
+                  <!--Hidden from user, shown to screen readers-->
+                  <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd"
+                          d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
+                          clip-rule="evenodd" />
+                  </svg>
+              </div>
+              <div *ngFor="let page of displayedPages" (click)="setPage(page)"
+                  [class]="currentPage === page ? 'bg-gray-600' : ''"
+                  class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-white bg-purple-500 hover:bg-gray-600 ring-1 ring-inset ring-gray-500 hover:ring-gray-600 focus:z-20 focus:outline-offset-0">
+                  {{ page === -1 ? "..." : page }}
+              </div>
 
-                  <div (click)="nextPage()"
-                      class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-white hover:text-black focus:z-20 focus:outline-offset-0">
-                      <span class="sr-only">Next</span>
-                      <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                          <path fill-rule="evenodd"
-                              d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
-                              clip-rule="evenodd" />
-                      </svg>
-                  </div>
-              </nav>
-          </div>
+              <div (click)="nextPage()"
+                  class="relative inline-flex items-center rounded-r-md px-2 py-2 text-white bg-purple-500 hover:bg-gray-600 ring-1 ring-inset ring-gray-500 focus:z-20 focus:outline-offset-0">
+                  <span class="sr-only">Next</span>
+                  <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd"
+                          d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                          clip-rule="evenodd" />
+                  </svg>
+              </div>
+          </nav>
+      </div>
+  </div>
+</div>
+
       </div>
   </div>
 </div>
