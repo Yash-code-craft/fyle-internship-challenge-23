@@ -4,7 +4,7 @@
 
 I successfully completed the Fyle Frontend Challenge. Below is the link to my deployed Angular application:
 
-[Deployed App Link](insert_your_deployed_app_link_here)
+[Deployed App Link](https://yash-code-craft.github.io/fyle-internship-challenge-23/)
 
 ## Challenge Outline
 
